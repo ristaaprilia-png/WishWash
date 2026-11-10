@@ -17,6 +17,7 @@ public class Pesanan {
     private boolean lunas = false;
     private LocalDateTime estimasiSelesai;
     private LocalDateTime waktuDibuat;
+    private LocalDateTime waktuMulai;
 
     public Pesanan(Pelanggan pelanggan, Layanan layanan, double jumlah) {
         counter++;
@@ -74,6 +75,14 @@ public class Pesanan {
     }
     public LocalDateTime getWaktuDibuat() {
         return waktuDibuat;
+    }
+
+    public LocalDateTime getWaktuMulai() {
+        return waktuMulai;
+    }
+
+    public void setWaktuMulai(LocalDateTime waktuMulai) {
+        this.waktuMulai = waktuMulai;
     }
     public String getEstimasiTeks() {
         if (!sedangDikerjakan()) {

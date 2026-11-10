@@ -55,9 +55,10 @@ public class AntreanLaundry {
         return t;
     }
     public LocalDateTime hitungEstimasiBaru(Layanan layanan) {
+        perbaruiEstimasi();
         LocalDateTime kursor = LocalDateTime.now();
         for (Pesanan p : antrean) {
-            kursor = tambahJamKerja(kursor, p.getLayanan().getDurasi());
+            kursor = p.getEstimasiSelesai();
         }
         return tambahJamKerja(kursor, layanan.getDurasi());
     }
@@ -73,10 +74,25 @@ public class AntreanLaundry {
     }
 
     public void perbaruiEstimasi() {
-        LocalDateTime kursor = LocalDateTime.now();
+        LocalDateTime sekarang = LocalDateTime.now();
+        LocalDateTime kursor = sekarang;
+        boolean terdepan = true;
         for (Pesanan p : antrean) {
-            kursor = tambahJamKerja(kursor, p.getLayanan().getDurasi());
-            p.setEstimasiSelesai(kursor);
+            LocalDateTime selesai;
+            if (terdepan) {
+                if (p.getWaktuMulai() == null) {
+                    p.setWaktuMulai(sekarang);
+                }
+                selesai = tambahJamKerja(p.getWaktuMulai(), p.getLayanan().getDurasi());
+                if (selesai.isBefore(sekarang)) {
+                    selesai = sekarang;
+                }
+                terdepan = false;
+            } else {
+                selesai = tambahJamKerja(kursor, p.getLayanan().getDurasi());
+            }
+            p.setEstimasiSelesai(selesai);
+            kursor = selesai;
         }
     }
 }
