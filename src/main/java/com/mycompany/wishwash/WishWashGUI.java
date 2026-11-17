@@ -55,7 +55,8 @@ public class WishWashGUI extends Application {
     }
 
     private void ganti(javafx.scene.Parent root, double lebar, double tinggi) {
-        stage.setScene(new Scene(root, lebar, tinggi));
+    root.setStyle("-fx-base: #e3f2fd; -fx-accent: #1e88e5;");
+    stage.setScene(new Scene(root, lebar, tinggi));
     }
 
     private void alert(Alert.AlertType tipe, String judul, String pesan) {
